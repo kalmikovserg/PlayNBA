@@ -10,7 +10,8 @@ import ARKit
 
 class ViewController: UIViewController {
     
-    var scoreNBA = 0
+    var scorePlaer = 0
+    var firstBall = true
     
     var isHoopPlaced = false {
         didSet {
@@ -23,6 +24,8 @@ class ViewController: UIViewController {
     }
     
     @IBOutlet var sceneView: ARSCNView!
+    @IBOutlet var poitLabel: UILabel!
+    @IBOutlet var scoreLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +49,7 @@ class ViewController: UIViewController {
     @IBAction func screenTaped(_ sender: UITapGestureRecognizer) {
         if isHoopPlaced {
             addBall()
+            firstBall = false
         } else {
             let touchLacation = sender.location(in: sceneView)
             let hitTestResult = sceneView.hitTest(touchLacation, types: .existingPlaneUsingExtent)
@@ -67,6 +71,20 @@ class ViewController: UIViewController {
         let force = SCNVector3(-tranform.m31 * power, -tranform.m32 * power, -tranform.m33 * power)
         ball.physicsBody?.applyForce(force, asImpulse: true)
         sceneView.scene.rootNode.addChildNode(ball)
+        
+        if firstBall {
+            let scoreLabel = sceneView.scene.rootNode.childNode(withName: "nbaLabel", recursively: false)
+            scoreLabel?.removeFromParentNode()
+        }
+        if tranform.m31 > 3 {
+            poitLabel.text = Point.threePoint.rawValue
+            // check for food
+            scorePlaer += 3
+        } else {
+            poitLabel.text = Point.twoPoint.rawValue
+            // check for food
+            scorePlaer += 2
+        }
     }
     
     //MARK: - Custom Methods
@@ -79,18 +97,15 @@ class ViewController: UIViewController {
         
         hoop.physicsBody = SCNPhysicsBody(type: .static, shape: SCNPhysicsShape(node: hoop, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.concavePolyhedron]))
         
-        let score = createScore()
-        
+        let score = createNBALabel()
         score.eulerAngles.y += 0.1
         score.scale = SCNVector3(0.01, 0.01, 0.01)
-        
         sceneView.scene.rootNode.addChildNode(score)
         
         sceneView.scene.rootNode.enumerateChildNodes{ node, _ in
             if node.name == "Wall" {
                 node.removeFromParentNode()
             }
-            
         }
     }
     
@@ -108,8 +123,7 @@ class ViewController: UIViewController {
         return wall
     }
     
-    private func createScore(nbaLabel: String = "Play BasketBall") -> SCNNode {
-        
+    private func createNBALabel(nbaLabel: String = "Hello! Play BasketBall") -> SCNNode {
         let nbaGEO = SCNText(string: nbaLabel, extrusionDepth: 0.5)
         nbaGEO.name = "nbaLabel"
         nbaGEO.firstMaterial?.diffuse.contents = UIColor.yellow
@@ -119,7 +133,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: ARSCNViewDelegate {
+extension ViewController: ARSCNViewDelegate, SKPhysicsContactDelegate {
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
         let wall = creatWall(pleneAnchor: planeAnchor)

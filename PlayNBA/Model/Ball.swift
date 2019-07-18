@@ -6,9 +6,9 @@
 //  Copyright © 2019 Сергей Калмыков. All rights reserved.
 //
 
-enum Point {
-    case threePoint
-    case twoPoint
+enum Point: String {
+    case threePoint = "Three point!"
+    case twoPoint = "Two point"
 }
 
 
