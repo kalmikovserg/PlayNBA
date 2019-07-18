@@ -13,6 +13,7 @@
 		BF522ADB22DBD4640056449E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF522AD922DBD4640056449E /* Main.storyboard */; };
 		BF522ADD22DBD4640056449E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF522ADC22DBD4640056449E /* Assets.xcassets */; };
 		BF522AE022DBD4640056449E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF522ADE22DBD4640056449E /* LaunchScreen.storyboard */; };
+		BF8FB21322E0047C0069C53D /* Ball.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8FB21222E0047C0069C53D /* Ball.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		BF522ADC22DBD4640056449E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BF522ADF22DBD4640056449E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BF522AE122DBD4640056449E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BF8FB21222E0047C0069C53D /* Ball.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ball.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +58,40 @@
 		BF522AD222DBD4630056449E /* PlayNBA */ = {
 			isa = PBXGroup;
 			children = (
-				BF522AD322DBD4630056449E /* AppDelegate.swift */,
+				BF8FB21722E006050069C53D /* Controller */,
+				BF8FB21522E005C00069C53D /* Model */,
+				BF8FB21422E005B00069C53D /* View */,
 				BF522AD522DBD4630056449E /* art.scnassets */,
-				BF522AD722DBD4640056449E /* ViewController.swift */,
-				BF522AD922DBD4640056449E /* Main.storyboard */,
 				BF522ADC22DBD4640056449E /* Assets.xcassets */,
 				BF522ADE22DBD4640056449E /* LaunchScreen.storyboard */,
 				BF522AE122DBD4640056449E /* Info.plist */,
 			);
 			path = PlayNBA;
+			sourceTree = "<group>";
+		};
+		BF8FB21422E005B00069C53D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BF522AD922DBD4640056449E /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		BF8FB21522E005C00069C53D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BF8FB21222E0047C0069C53D /* Ball.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		BF8FB21722E006050069C53D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				BF522AD722DBD4640056449E /* ViewController.swift */,
+				BF522AD322DBD4630056449E /* AppDelegate.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,6 +166,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF8FB21322E0047C0069C53D /* Ball.swift in Sources */,
 				BF522AD822DBD4640056449E /* ViewController.swift in Sources */,
 				BF522AD422DBD4630056449E /* AppDelegate.swift in Sources */,
 			);
