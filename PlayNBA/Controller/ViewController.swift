@@ -12,6 +12,7 @@ import SpriteKit
 
 class ViewController: UIViewController {
     
+    var statusHit = false
     var scorePlaer = 0
     var firstBall = true
     
@@ -180,8 +181,13 @@ extension ViewController: ARSCNViewDelegate, SCNPhysicsContactDelegate {
         node.addChildNode(wall)
     }
     func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
-        scoreLabel.text = "\(scorePlaer)"
+        statusHit = true
     }
-    
+    func physicsWorld(_ world: SCNPhysicsWorld, didEnd contact: SCNPhysicsContact) {
+        if statusHit {
+            scoreLabel.text = "\(scorePlaer)"
+            statusHit = false
+        }
+    }
 }
 
