@@ -14,6 +14,7 @@
 		BF522ADD22DBD4640056449E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF522ADC22DBD4640056449E /* Assets.xcassets */; };
 		BF522AE022DBD4640056449E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF522ADE22DBD4640056449E /* LaunchScreen.storyboard */; };
 		BF8FB21322E0047C0069C53D /* Ball.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8FB21222E0047C0069C53D /* Ball.swift */; };
+		BF8FB21922E358D40069C53D /* BitMaskCatigory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8FB21822E358D40069C53D /* BitMaskCatigory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		BF522ADF22DBD4640056449E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BF522AE122DBD4640056449E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BF8FB21222E0047C0069C53D /* Ball.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ball.swift; sourceTree = "<group>"; };
+		BF8FB21822E358D40069C53D /* BitMaskCatigory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitMaskCatigory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				BF8FB21222E0047C0069C53D /* Ball.swift */,
+				BF8FB21822E358D40069C53D /* BitMaskCatigory.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -167,6 +170,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF8FB21322E0047C0069C53D /* Ball.swift in Sources */,
+				BF8FB21922E358D40069C53D /* BitMaskCatigory.swift in Sources */,
 				BF522AD822DBD4640056449E /* ViewController.swift in Sources */,
 				BF522AD422DBD4630056449E /* AppDelegate.swift in Sources */,
 			);

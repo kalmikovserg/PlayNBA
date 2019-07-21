@@ -7,6 +7,8 @@
 //
 
 import ARKit
+import CoreMotion
+import SpriteKit
 
 class ViewController: UIViewController {
     
@@ -30,12 +32,15 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        sceneView.scene.physicsWorld.contactDelegate = self
         sceneView.delegate = self
         sceneView.showsStatistics = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+      
         let configuration = ARWorldTrackingConfiguration()
         configuration.planeDetection = .vertical
         sceneView.session.run(configuration)
@@ -65,6 +70,11 @@ class ViewController: UIViewController {
         
         let ball = SCNNode(geometry: SCNSphere(radius: 0.25))
         ball.physicsBody = SCNPhysicsBody(type: .dynamic, shape: SCNPhysicsShape(node: ball, options: [SCNPhysicsShape.Option.collisionMargin: 0.01]))
+      
+        ball.physicsBody?.categoryBitMask = Int(BitMaskCategory.ball)
+        ball.physicsBody?.collisionBitMask = Int(BitMaskCategory.firstBody)
+        ball.physicsBody?.contactTestBitMask = Int(BitMaskCategory.firstBody)
+      
         ball.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "art.scnassets/basketballtexture.jpg")
         let tranform = SCNMatrix4(frame.camera.transform)
         let power = Float(10)
@@ -78,12 +88,29 @@ class ViewController: UIViewController {
         }
         if tranform.m31 > 3 {
             poitLabel.text = Point.threePoint.rawValue
-            // check for food
-            scorePlaer += 3
+            sceneView.scene.rootNode.enumerateChildNodes{ node, _ in
+                if node.name == "hit" {
+                    node.opacity = 0
+                    node.physicsBody?.categoryBitMask = Int(BitMaskCategory.firstBody)
+                    node.physicsBody?.collisionBitMask = Int(BitMaskCategory.ball)
+                    node.physicsBody?.contactTestBitMask = Int(BitMaskCategory.ball)
+                    self.scorePlaer += 3
+                    self.poitLabel.text = Point.threePoint.rawValue
+                }
+            }
         } else {
             poitLabel.text = Point.twoPoint.rawValue
-            // check for food
-            scorePlaer += 2
+            sceneView.scene.rootNode.enumerateChildNodes{ node, _ in
+                if node.name == "hit" {
+                    node.opacity = 0
+                    node.physicsBody?.categoryBitMask = Int(BitMaskCategory.firstBody)
+                    node.physicsBody?.collisionBitMask = Int(BitMaskCategory.ball)
+                    node.physicsBody?.contactTestBitMask = Int(BitMaskCategory.ball)
+                    self.scorePlaer += 2
+                    self.poitLabel.text = Point.twoPoint.rawValue
+                }
+            }
+            
         }
     }
     
@@ -96,6 +123,10 @@ class ViewController: UIViewController {
         sceneView.scene.rootNode.addChildNode(hoop)
         
         hoop.physicsBody = SCNPhysicsBody(type: .static, shape: SCNPhysicsShape(node: hoop, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.concavePolyhedron]))
+       
+//        hoop.physicsBody?.categoryBitMask = Int(BitMaskCategory.board)
+//        hoop.physicsBody?.collisionBitMask = Int(BitMaskCategory.ball)
+//        hoop.physicsBody?.contactTestBitMask = Int(BitMaskCategory.ball)
         
         let score = createNBALabel()
         score.eulerAngles.y += 0.1
@@ -133,12 +164,17 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: ARSCNViewDelegate, SKPhysicsContactDelegate {
+extension ViewController: ARSCNViewDelegate, SCNPhysicsContactDelegate {
+    
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
         let wall = creatWall(pleneAnchor: planeAnchor)
         node.addChildNode(wall)
     }
+    func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
+         scoreLabel.text = "\(scorePlaer)"
+         print("Забил")
+    }
+  
 }
-
 
