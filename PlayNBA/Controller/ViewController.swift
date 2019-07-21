@@ -181,7 +181,6 @@ extension ViewController: ARSCNViewDelegate, SCNPhysicsContactDelegate {
     }
     func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
         scoreLabel.text = "\(scorePlaer)"
-        print("Забил")
     }
     
 }
