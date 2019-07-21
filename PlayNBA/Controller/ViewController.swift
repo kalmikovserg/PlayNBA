@@ -71,9 +71,9 @@ class ViewController: UIViewController {
         let ball = SCNNode(geometry: SCNSphere(radius: 0.25))
         ball.physicsBody = SCNPhysicsBody(type: .dynamic, shape: SCNPhysicsShape(node: ball, options: [SCNPhysicsShape.Option.collisionMargin: 0.01]))
       
-        ball.physicsBody?.categoryBitMask = Int(BitMaskCategory.ball)
-        ball.physicsBody?.collisionBitMask = Int(BitMaskCategory.firstBody)
-        ball.physicsBody?.contactTestBitMask = Int(BitMaskCategory.firstBody)
+//        ball.physicsBody?.categoryBitMask = Int(BitMaskCategory.ball)
+//        ball.physicsBody?.collisionBitMask = Int(BitMaskCategory.firstBody)
+//        ball.physicsBody?.contactTestBitMask = Int(BitMaskCategory.firstBody)
       
         ball.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "art.scnassets/basketballtexture.jpg")
         let tranform = SCNMatrix4(frame.camera.transform)
@@ -90,10 +90,13 @@ class ViewController: UIViewController {
             poitLabel.text = Point.threePoint.rawValue
             sceneView.scene.rootNode.enumerateChildNodes{ node, _ in
                 if node.name == "hit" {
+                    if firstBall {
                     node.opacity = 0
                     node.physicsBody?.categoryBitMask = Int(BitMaskCategory.firstBody)
                     node.physicsBody?.collisionBitMask = Int(BitMaskCategory.ball)
                     node.physicsBody?.contactTestBitMask = Int(BitMaskCategory.ball)
+                    firstBall = false
+                    }
                     self.scorePlaer += 3
                     self.poitLabel.text = Point.threePoint.rawValue
                 }
@@ -102,10 +105,13 @@ class ViewController: UIViewController {
             poitLabel.text = Point.twoPoint.rawValue
             sceneView.scene.rootNode.enumerateChildNodes{ node, _ in
                 if node.name == "hit" {
+                     if firstBall {
                     node.opacity = 0
                     node.physicsBody?.categoryBitMask = Int(BitMaskCategory.firstBody)
                     node.physicsBody?.collisionBitMask = Int(BitMaskCategory.ball)
                     node.physicsBody?.contactTestBitMask = Int(BitMaskCategory.ball)
+                    firstBall = false
+                    }
                     self.scorePlaer += 2
                     self.poitLabel.text = Point.twoPoint.rawValue
                 }
